@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
     "default": "gulp start"
   },
   "author": "",
@@ -12,12 +12,14 @@
   "devDependencies": {
     "autoprefixer": "^7.1.4",
     "babelify": "^6.3.0",
+    "browser-sync": "^2.18.13",
     "browserify": "^11.2.0",
     "chai": "^3.4.0",
     "cssnano": "^3.10.0",
     "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-cache": "^0.4.5",
+    "gulp-connect-php": "^1.0.1",
     "gulp-handlebars": "^4.0.0",
     "gulp-htmlhint": "^0.3.0",
     "gulp-htmlmin": "^3.0.0",

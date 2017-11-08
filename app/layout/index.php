@@ -25,15 +25,15 @@
 
   <div id="wrapper" class="toggled">
     <div id="page_content_wrapper">
-      <%include src="partials/nav.html"%>
-      <%include src="partials/header.html"%>
+      <?php include "partials/nav.html" ?>
+      <?php include "partials/header.html" ?>
       <div class="container">
-        <%include src="partials/modal.html"%>
-        <%include src="partials/article.html"%>
-        <%include src="partials/footer.html"%>
+        <?php include "partials/modal.html" ?>
+        <?php include "partials/article.html" ?>
+        <?php include "partials/footer.html" ?>
       </div>
     </div>
-    <%include src="partials/sidebar.html"%>
+    <?php include "partials/sidebar.html" ?>
   </div>
 
 

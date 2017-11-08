@@ -14,6 +14,8 @@ var plumber       = require('gulp-plumber');
 var notify        = require('gulp-notify');
 var uglify        = require('gulp-uglify');
 var server        = require('gulp-server-livereload');
+var connect       = require('gulp-connect-php');
+var browserSync   = require('browser-sync');
 var fontAwesome   = require('node-font-awesome');
 var jshint        = require('gulp-jshint');
 var stylish       = require('jshint-stylish');
@@ -91,8 +93,20 @@ gulp.task('clean:dist', function(){
   return del.sync('dist/*.html');
 });
 
+gulp.task('connect-sync', function() {
+  connect.server({}, function (){
+    browserSync({
+      proxy: '127.0.0.1:8000'
+    });
+  });
+ 
+  gulp.watch('app/layout/*.php').on('change', function () {
+    browserSync.reload();
+  });
+});
+
 gulp.task('render', function() {
-  return gulp.src('app/layout/*.html', {read: false})
+  return gulp.src('app/layout/*.php', {read: false})
     .pipe(htmlrender.render())
     .pipe(htmlmin())
     .pipe(gulp.dest('dist'))
