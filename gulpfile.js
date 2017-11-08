@@ -90,26 +90,24 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('clean:dist', function(){
-  return del.sync('dist/*.html');
+  return del.sync('dist/**/*.php');
 });
 
 gulp.task('connect-sync', function() {
-  connect.server({}, function (){
+  connect.server({ base: 'dist' }, function (){
     browserSync({
       proxy: '127.0.0.1:8000'
     });
   });
- 
-  gulp.watch('app/layout/*.php').on('change', function () {
-    browserSync.reload();
-  });
 });
 
+gulp.task('reload', ['render'], function() {
+  browserSync.reload();
+})
+
 gulp.task('render', function() {
-  return gulp.src('app/layout/*.php', {read: false})
-    .pipe(htmlrender.render())
-    .pipe(htmlmin())
-    .pipe(gulp.dest('dist'))
+  return gulp.src('./app/layout/**/*.php')
+    .pipe(gulp.dest('./dist'))
 });
 
 // Janky - quick fix to write spec file
@@ -148,9 +146,10 @@ gulp.task('hint:js', function() {
 gulp.task('lint', ['style:js', 'hint:js']);
 
 gulp.task('watch', function() {
-  watch(['./app/layout/**/*.html'], function () {
+  watch(['./app/layout/**/*.php'], function () {
     gulp.start('clean:dist');
     gulp.start('render');
+    gulp.start('reload');
   });
   watch('./app/sass/**/*.scss', function () {  
     gulp.start('sass'); 
@@ -165,13 +164,6 @@ gulp.task('watch', function() {
   });
 });
 
-gulp.task('server', ['default'], function () {
-  return gulp.src('dist')
-    .pipe(server({
-      livereload: true
-    }));
-});
-
 gulp.task('default', ['clean:dist',
                       'render',
                       'sass',
@@ -181,4 +173,4 @@ gulp.task('default', ['clean:dist',
                       'browserify',
                       'browserify-test']);
 
-gulp.task('start', ['default', 'watch', 'server']);
+gulp.task('start', ['default', 'watch', 'connect-sync']);
